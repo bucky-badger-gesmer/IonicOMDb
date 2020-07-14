@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar class="navbar" color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>OMDb Search</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="search-omdb" padding>
+    <ion-searchbar #title
+      type="search"
+      (keyup.enter)="search(title.value)"
+      placeholder="Search for a title..."
+      clear-input=true
+      padding>
+    </ion-searchbar>
+  </div>
+
+  <div *ngIf="isValidSearch()" class="valid-search-result" padding>
+    <h1>{{ getTitle() }} ({{ getYear() }})</h1>
+    <h3>Directed by {{ getDirector() }}</h3>
+    <img [src]="getImgUrl()">
+    <p>{{ getPlot() }}</p>
+
+    <h4 class="awards">Awards: {{ getAwards() }}</h4>
+    <h4>Box Office: {{ getBoxOffice() }}</h4>
+    <table>
+      <tr padding>
+        <td><img src="../../assets/imgs/imdb-logo.png" height="10%"></td>
+        <td><h2>{{ getImdbRating() }}</h2></td>
+      </tr>
+      <tr>
+        <td><img src="../../assets/imgs/rotten-tomatoes-logo.png" height="20%"></td>
+        <td><h2>{{ getRottenTomatoesRating() }}</h2></td>
+      </tr>
+      <tr>
+        <td><img src="../../assets/imgs/metacritic-logo.png" height="8%"></td>
+        <td><h2>{{ getMetacriticRating() }}</h2></td>
+      </tr>
+    </table>
+
+    <button ion-button color="secondary" (click)="addToAlreadyWatched()">Add to Already Watched</button>
+    <button ion-button color="purple" (click)="addToWatchList()">Add to Watch List</button>
+  </div>
+
+  <div *ngIf="isNotFound()">
+    <p>No movie found with that title</p>
+  </div>
+
+  <div *ngIf="isNotProvided()">
+    <p>Please provide a title to search for</p>
+  </div>
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar class="navbar" color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Watch List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="getTitles().length; else no_content" class="watch-list">
+    <ion-list>
+      <ion-searchbar #title
+        type="search"
+        placeholder="Search for a title..."
+        clear-input=true
+        padding>
+      </ion-searchbar>
+
+      <ion-item-sliding *ngFor="let title of getTitles()">
+        <ion-item>
+          <img [src]="title.imgUrl"><h1>{{ title.title }}</h1>
+        </ion-item>
+
+        <ion-item-options slide="end">
+          <button ion-button color="secondary" (click)="watchedTitle(title.title)"><ion-icon name="checkmark-circle"></ion-icon>Watched</button>
+          <button ion-button color="danger" (click)="removeTitleFromWatchList(title.title)"><ion-icon name="trash"></ion-icon>Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+  
+  <ng-template #no_content>
+    <h2 style="text-align: center">Watch List is empty</h2>
+  </ng-template>
+</ion-content>
